@@ -30,16 +30,34 @@ const cartSlice = createSlice({
     removeItem: (state, action: PayloadAction<number>) => {
       state.items = state.items.filter((i) => i.id !== action.payload)
     },
+    incrementItem: (state, action: PayloadAction<number>) => {
+      const item = state.items.find((i) => i.id === action.payload)
+      if (item) item.quantity += 1
+    },
+    decrementItem: (state, action: PayloadAction<number>) => {
+      const item = state.items.find((i) => i.id === action.payload)
+      if (item) {
+        item.quantity -= 1
+        if (item.quantity <= 0) {
+          state.items = state.items.filter((i) => i.id !== action.payload)
+        }
+      }
+    },
     clearCart: (state) => {
       state.items = []
       state.restaurantId = null
       state.restaurantName = null
       state.isOpen = false
     },
+    clearCartKeepOpen: (state) => {
+      state.items = []
+      state.restaurantId = null
+      state.restaurantName = null
+    },
     openCart: (state) => { state.isOpen = true },
     closeCart: (state) => { state.isOpen = false },
   },
 })
 
-export const { addItem, removeItem, clearCart, openCart, closeCart } = cartSlice.actions
+export const { addItem, removeItem, incrementItem, decrementItem, clearCart, clearCartKeepOpen, openCart, closeCart } = cartSlice.actions
 export default cartSlice.reducer
