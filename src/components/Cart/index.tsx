@@ -44,6 +44,13 @@ const HeaderSubtitle = styled.p`
   font-family: 'Roboto', sans-serif;
 `
 
+const CheckoutTotalText = styled.p`
+  font-size: 12px;
+  color: rgba(255,255,255,0.8);
+  margin: 6px 0 0;
+  font-family: 'Roboto', sans-serif;
+`
+
 const ItemRow = styled.div`
   display: flex;
   align-items: center;
@@ -359,6 +366,9 @@ const Cart: React.FC = () => {
         <Header>
           <HeaderTitle>Meu carrinho</HeaderTitle>
           <HeaderSubtitle>{quantityCount} item{quantityCount !== 1 ? 's' : ''} selecionado{quantityCount !== 1 ? 's' : ''}</HeaderSubtitle>
+          {checkoutMode && (
+            <CheckoutTotalText>Total da compra: R$ {total.toFixed(2).replace('.', ',')}</CheckoutTotalText>
+          )}
         </Header>
         <Content>
           {orderSuccess ? (
